@@ -80,7 +80,7 @@ $c^d \equiv {(m^e)}^d \equiv m (mod$  $n)$
 
 
 
-![](D:\Code\IDEA\Multifunctional-Cryptography-Toolkit\note\RSA Encryption\Picture1.png)
+![](https://raw.githubusercontent.com/yz7777777/MultiFunctional-Cryptography-Toolkit/main/note/RSA%20Encryption/Picture1.png)
 
 只需要创建KeyPairGenerator对象并指明RSA算法 初始化1024位长的密钥对
 
@@ -88,7 +88,7 @@ $c^d \equiv {(m^e)}^d \equiv m (mod$  $n)$
 
 
 
-![](D:\Code\IDEA\Multifunctional-Cryptography-Toolkit\note\RSA Encryption\Picture2.png)
+![](https://raw.githubusercontent.com/yz7777777/MultiFunctional-Cryptography-Toolkit/main/note/RSA%20Encryption/Picture2.png)
 
 
 
