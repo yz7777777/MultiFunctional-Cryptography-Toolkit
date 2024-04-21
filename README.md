@@ -75,41 +75,6 @@ Alice可以用她的私钥d将$c$ 恢复成$m$​
 $c^d \equiv {(m^e)}^d \equiv m (mod$  $n)$
 
 
-
-在实际开发中 生成密钥对的时候并不需要和真实的加密步骤一样考虑如何生成密钥 这些Java都封装好了
-
-
-
-![](https://raw.githubusercontent.com/yz7777777/MultiFunctional-Cryptography-Toolkit/main/note/RSA%20Encryption/Picture1.png)
-
-只需要创建KeyPairGenerator对象并指明RSA算法 初始化1024位长的密钥对
-
-再将得到的公钥和密钥进行Base64编码并加入一个静态的Map对象即可
-
-
-
-![](https://raw.githubusercontent.com/yz7777777/MultiFunctional-Cryptography-Toolkit/main/note/RSA%20Encryption/Picture2.png)
-
-
-
-加密和解密时先将公钥或私钥base64解码 并专换公钥的对象类型以作为Cipher对象初始化的参数 方便加解密
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### Elgamal加密(基于素数域)
 
 Elgamal加密除了对素数域的乘法群外对其他循环群也适用
