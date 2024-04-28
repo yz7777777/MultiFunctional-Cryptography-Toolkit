@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by larry on 15-5-18.
+ *
  * EIGamal 非对称公钥加密算法　Bouncy Castle实现
  */
 public class ElGamal {
