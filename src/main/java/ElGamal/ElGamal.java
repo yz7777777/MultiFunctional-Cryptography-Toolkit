@@ -76,7 +76,6 @@ public class ElGamal {
     public static String encrypt(String str, String publicKeyString) throws Exception{
         //base64解码
         byte[] decoded = Base64.decodeBase64(publicKeyString);
-
         //公钥加密
         X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(decoded);
         KeyFactory keyFactory = KeyFactory.getInstance("ElGamal");

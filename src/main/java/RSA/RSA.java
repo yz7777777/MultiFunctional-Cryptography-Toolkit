@@ -27,6 +27,11 @@ public class RSA {
         System.out.println("加密后的字符串：" + encStr);
         String decStr = decrypt(encStr,keyMap.get(1));
         System.out.println("解密后的字符串："+ decStr);
+
+        String str2 = "Hello Signature";
+        String signature = sign(str2, keyMap.get(1));
+        System.out.println("RSA签名: " + signature);
+        System.out.println(verify(str2, keyMap.get(0), signature));
     }
 
     /**
@@ -90,6 +95,56 @@ public class RSA {
         return outStr;
     }
 
+
+    public static String sign(String data, String privateKey) {
+        try {
+            // 入参数据body字节数组
+            byte[] dataBytes = data.getBytes();
+            // 获取私钥秘钥字节数组
+            byte[] keyBytes = Base64.decodeBase64(privateKey);
+            // 使用给定的编码密钥创建一个新的PKCS8EncodedKeySpec。
+            // PKCS8EncodedKeySpec 是 PKCS#8标准作为密钥规范管理的编码格式
+            // 实例化KeyFactory,指定为加密算法 为 RSA
+            // 获得PrivateKey对象
+            PrivateKey privateKey1= KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(keyBytes));
+            // 用私钥对信息生成数字签名，指定签名算法为 MD5withRSA
+            Signature signature = Signature.getInstance("MD5withRSA");
+            // 初始化签名
+            signature.initSign(privateKey1);
+            // 数据body带入
+            signature.update(dataBytes);
+            // 对签名进行Base64编码
+            return Base64.encodeBase64String(signature.sign());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static boolean verify(String data, String publicKey, String sign) {
+        try {
+            // 入参数据body字节数组
+            byte[] dataBytes = data.getBytes("UTF-8");
+            // 获取公钥秘钥字节数组
+            byte[] keyBytes = Base64.decodeBase64(publicKey);
+            // 使用给定的编码密钥创建一个新的X509EncodedKeySpec
+            // X509EncodedKeySpec是基于X.509证书提前的公钥，一种java秘钥规范
+            // 实例化KeyFactory,指定为加密算法 为 RSA
+            // 获取publicKey对象
+            PublicKey publicKey1 = KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(keyBytes));
+            // 用私钥对信息生成数字签名，指定签名算法为 MD5withRSA
+            Signature signature = Signature.getInstance("MD5withRSA");
+            // 带入公钥进行验证
+            signature.initVerify(publicKey1);
+            // 数据body带入
+            signature.update(dataBytes);
+            // 验证签名
+            return signature.verify(Base64.decodeBase64(sign));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
 
