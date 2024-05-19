@@ -17,43 +17,50 @@ public class RSA {
 
     public static void main(String[] args) throws Exception {
         //生成公钥和私钥
-        getKeyPair();
+        KeyPair keyPair = getKeyPair();
+        PrivateKey privateKey = keyPair.getPrivate();
+        PublicKey publicKey = keyPair.getPublic();
+
+        String publicKeyString=new String(Base64.encodeBase64(publicKey.getEncoded()));
+        String privateKeyString=new String(Base64.encodeBase64(privateKey.getEncoded()));
+
         //加密字符串
         String str="Hello RSA";
-        System.out.println("随机生成的公钥：" + keyMap.get(0));
-        System.out.println("随机生成的私钥：" + keyMap.get(1));
-        String encStr = encrypt(str,keyMap.get(0));
+        System.out.println("随机生成的公钥：" + publicKeyString);
+        System.out.println("随机生成的私钥：" + privateKeyString);
+        String encStr = encrypt(str,publicKeyString);
         System.out.println(str);
         System.out.println("加密后的字符串：" + encStr);
-        String decStr = decrypt(encStr,keyMap.get(1));
+        String decStr = decrypt(encStr,privateKeyString);
         System.out.println("解密后的字符串："+ decStr);
 
         String str2 = "Hello Signature";
-        String signature = sign(str2, keyMap.get(1));
+        String signature = sign(str2, privateKeyString);
         System.out.println("RSA签名: " + signature);
-        System.out.println(verify(str2, keyMap.get(0), signature));
+        System.out.println(verify(str2, publicKeyString, signature));
     }
 
     /**
      * 随机生成密钥对
      * @throws NoSuchAlgorithmException
      */
-    public static void getKeyPair() throws Exception {
+    public static KeyPair getKeyPair() throws Exception {
         //KeyPairGenerator类用于生成公钥和密钥对，基于RSA算法生成对象
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
         //初始化密钥对生成器，密钥大小为1024位
         keyPairGen.initialize(1024,new SecureRandom());
         //生成一个密钥对，保存在keyPair中
         KeyPair keyPair = keyPairGen.generateKeyPair();
-        PrivateKey privateKey = keyPair.getPrivate();//得到私钥
-        PublicKey publicKey = keyPair.getPublic();//得到公钥
-        //得到公钥字符串
-        String publicKeyString=new String(Base64.encodeBase64(publicKey.getEncoded()));
-        //得到私钥字符串
-        String privateKeyString=new String(Base64.encodeBase64(privateKey.getEncoded()));
-        //将公钥和私钥保存到Map
-        keyMap.put(0,publicKeyString);//0表示公钥
-        keyMap.put(1,privateKeyString);//1表示私钥
+        return keyPair;
+//        PrivateKey privateKey = keyPair.getPrivate();//得到私钥
+//        PublicKey publicKey = keyPair.getPublic();//得到公钥
+//        //得到公钥字符串
+//        String publicKeyString=new String(Base64.encodeBase64(publicKey.getEncoded()));
+//        //得到私钥字符串
+//        String privateKeyString=new String(Base64.encodeBase64(privateKey.getEncoded()));
+//        //将公钥和私钥保存到Map
+//        keyMap.put(0,publicKeyString);//0表示公钥
+//        keyMap.put(1,privateKeyString);//1表示私钥
     }
 
 
